@@ -1,0 +1,144 @@
+package UVa;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+public class BitMaps {
+	static char[][] grid;
+	static StringBuilder res;
+
+	public static void main(String[] args) throws IOException {
+		Scanner sc = new Scanner(System.in);
+		PrintWriter out = new PrintWriter(System.out);
+
+		while(true) {
+			char format = sc.next().charAt(0);
+			if (format == '#') break;
+
+			int w = sc.nextInt();
+			int h = sc.nextInt();
+
+			grid = new char[w][h];
+			if (format == 'B') {
+				int count = 0;
+				int row = 0;
+				int col = 0;
+				while(count < w*h) {
+					String line = sc.nextLine();
+					for (int i = 0; i < line.length(); i++) {
+						grid[row][col] = line.charAt(i);
+						count++;
+						col++;
+						if (col == h) {
+							col = 0;
+							row++;
+						}
+					}
+				}
+				
+				for (int i = 0; i < w; i++)
+					System.out.println(Arrays.toString(grid[i]));
+
+				res = new StringBuilder();
+				solve(0, 0, w-1, h-1);
+				out.print(res);
+			}
+			else {
+
+			}
+		}
+
+		out.flush();
+		out.close();
+	}
+
+	public static void solve(int startRow, int startCol, int endRow, int endCol) {
+		boolean all0s = true;
+		boolean all1s = true;
+		
+		System.out.println(res);
+		System.out.println(startRow + " " + startCol + " " + endRow + " " + endCol);
+		
+		System.out.println();
+		for (int i = startRow; i <= endRow; i++) {
+			for (int j = startCol; j <= endCol; j++) {
+				System.out.print(grid[i][j] + " ");
+				if (grid[i][j] != '0')
+					all0s = false;
+				if (grid[i][j] != '1')
+					all1s = false;
+			}
+			System.out.println();
+		}
+		
+//		System.out.println(all0s + " " + all1s);
+		
+		if (all0s)
+			res.append('0');
+		else if (all1s)
+			res.append('1');
+		else {
+			res.append('D');
+			solve(startRow, startCol, Ceil((endRow-startRow+1), 2)-1+startRow, Ceil((endCol-startCol+1), 2)-1+startCol);
+			solve(startRow, Ceil((endCol-startCol+1), 2)+startCol, Ceil((endRow-startRow+1), 2)-1+startRow, endCol);
+			solve(Ceil((endRow-startRow+1), 2)+startRow, startCol, endRow, Ceil((endCol-startCol+1), 2)-1+startCol);
+			solve(Ceil((endRow-startRow+1), 2)+startRow, Ceil((endCol-startCol+1), 2)+startCol, endRow, endCol);
+		}
+	}
+
+	public static int Ceil(int a, int b) {
+		return a%b == 0 ? a/b : a/b + 1;
+	}
+
+	static class Scanner {
+		BufferedReader br;
+		StringTokenizer st;
+
+		public Scanner(FileReader f) {
+			br = new BufferedReader(f);
+		}
+
+		public Scanner(InputStream in) {
+			br = new BufferedReader(new InputStreamReader(in));
+		}
+
+		public String next() throws IOException {
+			while (st == null || !st.hasMoreTokens())
+				st = new StringTokenizer(br.readLine());
+			return st.nextToken();
+		}
+
+		public String nextLine() throws IOException {
+			return br.readLine();
+		}
+
+		public int nextInt() throws IOException {
+			return Integer.parseInt(next());
+		}
+
+		public long nextLong() throws IOException {
+			return Long.parseLong(next());
+		}
+
+		public double nextDouble() throws IOException {
+			return Double.parseDouble(next());
+		}
+
+		public boolean Ready() throws IOException {
+			return br.ready();
+		}
+
+		public void waitForInput(long time) {
+			long ct = System.currentTimeMillis();
+			while(System.currentTimeMillis() - ct < time) {};
+		}
+
+	}
+
+}

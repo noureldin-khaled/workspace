@@ -1,0 +1,18 @@
+package Codeforces;
+
+import java.math.BigInteger;
+import java.util.Scanner;
+
+public class CrackingTheCode {
+	
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		char[] c = sc.next().toCharArray();
+		String s = c[0] + c[2] + c[4] + c[3] + c[1] + "";
+		BigInteger b = new BigInteger(s);
+		b = b.pow(5);
+		
+		System.out.println(b.mod(new BigInteger("100000")));
+	}
+}

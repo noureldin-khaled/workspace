@@ -1,0 +1,22 @@
+package Codeforces;
+
+import java.math.BigInteger;
+import java.util.Scanner;
+
+public class SelectionOfPersonnel {
+	
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int n = sc.nextInt();
+		
+		BigInteger[] factorial = new BigInteger[n+1];
+		
+		factorial[0] = BigInteger.ONE;
+		for (int i = 1; i < n+1; i++)
+			factorial[i] = BigInteger.valueOf(i).multiply(factorial[i-1]);
+		
+		for (int i = 0; i < n+1; i++)
+			System.out.println(factorial[i]);
+	}
+	
+}
