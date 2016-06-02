@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 
 
-class CoinChange {
+public class CoinChange {
 	static final int [] coins = {50,25,10,5,1};
 	static int [][] dp;
 	

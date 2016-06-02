@@ -1,0 +1,13 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main()
+{
+	int n;
+	scanf("%i",&n);
+
+	cout << n + (n/2) << endl;
+}
+
+
