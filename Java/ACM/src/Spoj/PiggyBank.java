@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-class PiggyBank {
+public class PiggyBank {
 	final static int INF = 25000001;
 	static int [][] dp;
 	static int[] prices;
