@@ -1,75 +1,49 @@
 package Testing;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.StringTokenizer;
-
 public class t {
+	final static long MOD = 1000000007;
+	static int n;
+	static int k;
+	static int d;
+	static long dp[][];
 
-	public static void main(String[] args) throws IOException {
-		Scanner sc = new Scanner(System.in);
+	public static void main (String[]args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		n = Integer.parseInt(st.nextToken());
+		k = Integer.parseInt(st.nextToken());;
+		d = Integer.parseInt(st.nextToken());;
+		dp = new long[200][4];
+		for (int i = 0; i < 200; i++)
+			Arrays.fill(dp[i], -1);
 		
-		System.out.println(power(BigInteger.valueOf(2), BigInteger.valueOf(1000000)).toString().length());
+		System.out.println(rec(0, 0)%MOD);
 	}
 	
-	public static BigInteger power(BigInteger base, BigInteger e) {
-		if (e.compareTo(BigInteger.valueOf(0)) == 0)
-			return BigInteger.ONE;
-		if (e.mod(BigInteger.valueOf(2)).compareTo(BigInteger.ZERO) == 0) {
-			BigInteger ans = power(base, e.divide(BigInteger.valueOf(2)));
-			return ans.multiply(ans);
+	static long rec(int soFar, int valid) {
+		if (soFar == n)
+			if (valid == 1)
+				return 1;
+			else
+				return 0;
+		if (soFar > n)
+			return 0;
+		
+		if (dp[soFar][valid] != -1)
+			return dp[soFar][valid];
+		long ans = 0;
+		for (int i = 1; i <= k; i++) {
+			if (i >= d)
+				ans = (ans%MOD + rec(soFar+i, 1)%MOD)%MOD;
+			else
+				ans = (ans%MOD + rec(soFar+i, valid)%MOD)%MOD;
 		}
-		else {
-			return power(base, e.subtract(BigInteger.ONE)).multiply(base);
-		}
-	}
-	
-	static class Scanner {
-		BufferedReader br;
-		StringTokenizer st;
-
-		public Scanner(FileReader f) {
-			br = new BufferedReader(f);
-		}
-
-		public Scanner(InputStream in) {
-			br = new BufferedReader(new InputStreamReader(in));
-		}
-
-		public String next() throws IOException {
-			while (st == null || !st.hasMoreTokens())
-				st = new StringTokenizer(br.readLine());
-			return st.nextToken();
-		}
-
-		public String nextLine() throws IOException {
-			return br.readLine();
-		}
-
-		public int nextInt() throws IOException {
-			return Integer.parseInt(next());
-		}
-
-		public long nextLong() throws IOException {
-			return Long.parseLong(next());
-		}
-
-		public double nextDouble() throws IOException {
-			return Double.parseDouble(next());
-		}
-
-		public boolean Ready() throws IOException {
-			return br.ready();
-		}
-
-		public void waitForInput(long time) {
-			long ct = System.currentTimeMillis();
-			while(System.currentTimeMillis() - ct < time) {};
-		}
-
+		
+		return dp[soFar][valid] = ans%MOD;
 	}
 }

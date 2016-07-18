@@ -20,7 +20,7 @@ int main()
                if (x == y) continue;
                for(int z = -100; z <= 100 && !found; z++)
                {
-                   if (x == z || y == z) continue;
+
                    if ((x+y+z)==a && (x*y*z)==b && ((x*x) + (y*y) + (z*z))==c)
                    {
                        printf("%i %i %i\n",x,y,z);
