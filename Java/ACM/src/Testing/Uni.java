@@ -1,103 +1,25 @@
 package Testing;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.util.Comparator;
+import java.util.TreeSet;
 
 public class Uni {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
-//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-//		StringTokenizer st = new StringTokenizer(br.readLine());
-//		int n = Integer.parseInt(st.nextToken());
-//		int m = Integer.parseInt(st.nextToken());
-//
-		
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		System.out.println(br.readLine());
-//		int pos = get(n);
-//		for (int i = 0; i < n; i++) {
-//			BigInteger b = BigInteger.valueOf(i);
-//			String s = b.toString(7);
-//			for (int j = s.length(); j < pos; j++)
-//				System.out.print("0");
-//			System.out.println(s);
-//		}
-//		BigInteger b = new BigInteger("6543210", 7);
-//		String s = b.toString();
-//		System.out.println(s);
-//		System.out.println();
-//	
-		
-		long n = 822004708953465932L;
-		while(n > 10)
-			n /= 2;
-		
-		System.out.println(n);
-//		int n = (int)1e9;
-//		int z = n*n;
-//		System.out.println(z);
-//		int n = Integer.parseInt(st.nextToken());
-//		int m = Integer.parseInt(st.nextToken());
-//		
-//		int arr[][][] = new int[n][m+201][5*n+5];
-//		pos = get(m);
-//		for (int i = 0; i < m; i++) {
-//			BigInteger b = BigInteger.valueOf(i);
-//			String s = b.toString(7);
-//			for (int j = s.length(); j < pos; j++)
-//				System.out.print("0");
-//			System.out.println(s);
-////		}
-//		boolean ans = rec(0, 0);
-//		if (ans)
-//			System.out.println("YES");
-//		else
-//			System.out.println("NO");
-		
-//		int arr[] = new int[2000000000];
+		PrintWriter out = new PrintWriter("out.txt");
+		System.out.println(BigInteger.valueOf(4).modInverse(BigInteger.valueOf(7)));
+		System.out.println(Math.pow(4, 7-2) % 7);
 	}
 	
-	static int arr[];
-	static int n;
-	static int target;
-	public static boolean rec(int index, int sumSoFar) {
-		if (sumSoFar == target)
-			return true;
-		if (sumSoFar > target || index >= n)
-			return false;
-		
-		boolean take = rec(index+1, sumSoFar + arr[index]);
-		boolean leave = rec(index+1, sumSoFar);
-		
-		return take || leave;
+	static void rec(int n) {
+		if (n <= 0)
+			return;
+		rec(n-1);
 	}
-	
-	
-	static int binarySearch(int low, int high, int key) {
-		int ans = -1;
-		while(low <= high) {
-			int mid = low + (high-low)/2;
-			
-			if (arr[mid] == key) {
-				ans = mid;
-				high = mid-1;
-			}
-			else if (arr[mid] > key)
-				high = mid-1;
-			else
-				low = mid+1;
-		}
-		
-		return ans;
-	}
-	
-	//	4 6 7 8 10 12 14 16 19
-	//	4 6 16 19
-	//	6
+	 
 	public static int get(int a) {
 		return BigInteger.valueOf(a-1).toString(7).length();
 	}

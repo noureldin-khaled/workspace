@@ -3,47 +3,65 @@ package Testing;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.StringTokenizer;
 public class t {
-	final static long MOD = 1000000007;
-	static int n;
-	static int k;
-	static int d;
-	static long dp[][];
 
-	public static void main (String[]args) throws NumberFormatException, IOException {
+	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		n = Integer.parseInt(st.nextToken());
-		k = Integer.parseInt(st.nextToken());;
-		d = Integer.parseInt(st.nextToken());;
-		dp = new long[200][4];
-		for (int i = 0; i < 200; i++)
-			Arrays.fill(dp[i], -1);
-		
-		System.out.println(rec(0, 0)%MOD);
-	}
-	
-	static long rec(int soFar, int valid) {
-		if (soFar == n)
-			if (valid == 1)
-				return 1;
-			else
-				return 0;
-		if (soFar > n)
-			return 0;
-		
-		if (dp[soFar][valid] != -1)
-			return dp[soFar][valid];
-		long ans = 0;
-		for (int i = 1; i <= k; i++) {
-			if (i >= d)
-				ans = (ans%MOD + rec(soFar+i, 1)%MOD)%MOD;
-			else
-				ans = (ans%MOD + rec(soFar+i, valid)%MOD)%MOD;
+		int test = Integer.parseInt(br.readLine());
+		StringBuilder sb = new StringBuilder();
+		for(int t=0; t<test; t++) {
+			int n = Integer.parseInt(br.readLine());
+			int number = 0;
+			String[] arr = new String[n];
+			int[]sorted;
+			t.DT[] array = new t.DT[n];
+			ArrayList<Integer>values = new ArrayList<Integer>();
+
+			for(int i=0; i<n; i++) {
+				StringTokenizer st = new StringTokenizer(br.readLine());
+				String k = st.nextToken();
+				String p = st.nextToken();
+				arr[i] = p;
+				t gp = new t();
+				t.DT dt = gp.new DT (Integer.parseInt(k),Integer.parseInt(p));
+				array[i] = dt;
+			}
+			String[] unique = new HashSet<String>(Arrays.asList(arr)).toArray(new String[0]);
+			sorted = new int[unique.length];
+			for(int j=0;j<sorted.length; j++) {
+				sorted[j] = Integer.parseInt(unique[j]);
+			}
+			Arrays.sort(sorted);
+			for(int m=0; m<sorted.length; m++) {
+				int counter=0;
+				for(int l=0; l<n; l++) {
+					if(array[l].value>=sorted[m])
+						counter+=array[l].key;
+				}
+				int result = counter*sorted[m];
+				values.add(result);
+			}
+
+			Collections.sort(values);
+			int max = values.get(values.size()-1);
+			sb.append("Case "+ (t+1) + ": " + max + '\n');
+
 		}
-		
-		return dp[soFar][valid] = ans%MOD;
+		System.out.println(sb);
+	}
+
+	public class DT {
+		int key;
+		int value;
+		public DT(int key, int value) {
+			this.key = key;
+			this.value=value;
+		}
 	}
 }
+

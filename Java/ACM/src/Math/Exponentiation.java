@@ -21,6 +21,18 @@ public class Exponentiation {
 		return res;
 	}
 	
+	// Fast Exponentiation (recursive)
+	public static int fastExp(int base, int p) {
+		if (p == 0) return 1;
+		if (p == 1) return base;
+		
+		int res = fastExp(base, p/2);
+		res *= res;
+		if (p%2 == 1)
+			res *= base;
+		return res;
+	}
+	
 	// Fast Exponentiation (Same as Binary Exponentiation but with big numbers)
 	public static int bigMod(int a, int e, int mod) {
 		a %= mod;

@@ -1,49 +1,89 @@
 package Codeforces;
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class WritingCode {
-	static int dp[][][];
-	static int[] programmersBugs;
-	static int mod;
-	
+
 	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		int n = Integer.parseInt(st.nextToken());
-		int m = Integer.parseInt(st.nextToken());
-		int b = Integer.parseInt(st.nextToken());
-		mod = Integer.parseInt(st.nextToken());
+		Scanner sc = new Scanner(System.in);
+		int n = sc.nextInt(), m = sc.nextInt(), b = sc.nextInt(), mod = sc.nextInt();
 
-		programmersBugs = new int[n];
-		st = new StringTokenizer(br.readLine());
+		int a[] = new int[n];
 		for (int i = 0; i < n; i++) 
-			programmersBugs[i] = Integer.parseInt(st.nextToken());
+			a[i] = sc.nextInt();
 
-		dp = new int[n+5][b+5][m+5];
-		for (int i = 0; i < dp.length; i++) 
-			for (int j = 0; j < dp[i].length; j++) 
-				Arrays.fill(dp[i][j], -1);
-
-		System.out.println(writingCode(0, b, m));
+		int dp[][][] = new int[2][m+1][b+1];
+		dp[0][0][0] = 1;
+		
+		int p = 0;
+		int c = 1;
+		for (int i = 1; i <= n; i++) {
+			for (int j = 0; j <= m; j++)
+				for (int k = 0; k <= b; k++) {
+					dp[c][j][k] = dp[p][j][k];
+					if (j > 0 && k-a[i-1] >= 0)
+						dp[c][j][k] += dp[c][j-1][k - a[i-1]];
+					dp[c][j][k] %= mod;
+				}
+			c = 1-c;
+			p = 1-p;
+		}
+		
+		int ans = 0;
+		for (int j = 0; j <= b; j++) {
+			ans += dp[p][m][j];
+			ans %= mod;
+		}
+		
+		System.out.println(ans);
 	}
-	public static int writingCode(int curProgrammer,int numberOfBugs,int remLines){
-	if (numberOfBugs < 0)
-		return 0;
-	if (remLines == 0)
-		return 1;
-	if (curProgrammer == programmersBugs.length)
-		return 0;
+	
+	static class Scanner {
+		BufferedReader br;
+		StringTokenizer st;
 
-	if (dp[curProgrammer][numberOfBugs][remLines] != -1)
-		return dp[curProgrammer][numberOfBugs][remLines];
+		public Scanner(FileReader f) {
+			br = new BufferedReader(f);
+		}
 
-	int take = writingCode(curProgrammer, numberOfBugs - programmersBugs[curProgrammer], remLines-1);
-	int leave = writingCode( curProgrammer+1, numberOfBugs,remLines);
+		public Scanner(InputStream in) {
+			br = new BufferedReader(new InputStreamReader(in));
+		}
 
-	return dp[curProgrammer][numberOfBugs][remLines] = (take + leave)% mod;
-}
+		public String next() throws IOException {
+			while (st == null || !st.hasMoreTokens())
+				st = new StringTokenizer(br.readLine());
+			return st.nextToken();
+		}
+
+		public String nextLine() throws IOException {
+			return br.readLine();
+		}
+
+		public int nextInt() throws IOException {
+			return Integer.parseInt(next());
+		}
+
+		public long nextLong() throws IOException {
+			return Long.parseLong(next());
+		}
+
+		public double nextDouble() throws IOException {
+			return Double.parseDouble(next());
+		}
+
+		public boolean Ready() throws IOException {
+			return br.ready();
+		}
+
+		public void waitForInput(long time) {
+			long ct = System.currentTimeMillis();
+			while(System.currentTimeMillis() - ct < time) {};
+		}
+
+	}
 }
