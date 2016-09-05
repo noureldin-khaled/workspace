@@ -37,6 +37,8 @@ public class Z_Algorithm {
 
 
 	public static void main(String[] args) {
-		System.out.println(Arrays.toString(z("ababax")));
+		String s = "abcdabc#abcdabc";
+		System.out.println(Arrays.toString(s.toCharArray()));
+		System.out.println(Arrays.toString(z(s)));
 	}
 }

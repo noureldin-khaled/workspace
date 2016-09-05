@@ -20,35 +20,6 @@ public class A {
 		out.close();
 	}
 
-	static double getFine(long a, long p) {
-		return (a * p)/100.0;
-	}
-
-	static class Result implements Comparable<Result> {
-		String name;
-		long cost;
-
-		public Result(String n, long c) {
-			name = n;
-			cost = c;
-		}
-
-		@Override
-		public int compareTo(Result o) {
-			return name.compareTo(o.name);
-		}
-	}
-
-	static class Car {
-		long price, pick_up, price_per_kilo;
-
-		public Car(long p, long pu, long ppk) {
-			price = p;
-			pick_up = pu;
-			price_per_kilo = ppk;
-		}
-	}
-
 	static class Scanner {
 		BufferedReader br;
 		StringTokenizer st;

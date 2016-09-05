@@ -57,6 +57,13 @@ public class BinomialCoefficient {
 		return res;
 	}
 	
+	public static void main(String[] args) {
+		int sum = 0;
+		for (int i = 0; i <= 25; i++)
+			sum += nCr4(25, i);
+		System.out.println(sum);
+	}
+	
 	/*
 	 * Catalan Numbers.
 	 */
